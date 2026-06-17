@@ -18,16 +18,7 @@ class PriceList:
 
 @dataclass
 class MtgGoldfishRatings:
-    standard: Optional[int] = None
-    modern: Optional[int] = None
-    pioneer: Optional[int] = None
-    premodern: Optional[int] = None
     pauper: Optional[int] = None
-    legacy: Optional[int] = None
-    vintage: Optional[int] = None
-
-
-
 
 @dataclass
 class Identifiers:

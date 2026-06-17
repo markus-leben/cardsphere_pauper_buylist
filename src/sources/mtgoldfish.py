@@ -12,7 +12,7 @@ MTGGOLDFISH_BASE = "https://www.mtggoldfish.com"
 STAPLES_URL = MTGGOLDFISH_BASE + "/format-staples/{fmt}/full/{card_type}"
 FULL_META_URL = MTGGOLDFISH_BASE + "/metagame/{fmt}/full"
 
-FORMATS = ["pauper", "standard", "modern", "pioneer", "premodern", "legacy", "vintage"]
+FORMATS = ["pauper"]
 CARD_TYPES = ["spells", "creatures", "lands"]
 
 CACHE_PATH = Path(".cache/mtggoldfish_staples.json")
@@ -67,7 +67,6 @@ def _fetch_metagame(fmt:str, session: requests.Session) -> dict[str: int]:
             meta[card.text] = 51
 
     return meta
-
 
 
 # ---------------------------------------------------------------------------
@@ -129,26 +128,11 @@ def fetch_all_staples(force: bool = False, staples_only: bool = False) -> dict[s
     return data
 
 
-
-
 def annotate_ratings(cards: list[Card], force: bool = False, staples_only: bool = False) -> None:
     """Annotate card.mtgoldfish_ratings in-place for every card found in the staples tables."""
     staples = fetch_all_staples(force=force, staples_only=staples_only)
-
-    standard = staples.get("standard", {})
-    modern = staples.get("modern", {})
-    pioneer = staples.get("pioneer", {})
-    premodern = staples.get("premodern", {})
-    legacy = staples.get("legacy", {})
-    vintage = staples.get("vintage", {})
     pauper = staples.get("pauper", {})
 
     for card in cards:
         r = card.mtggoldfish_ratings
-        r.standard = standard.get(card.name)
-        r.modern = modern.get(card.name)
-        r.pioneer = pioneer.get(card.name)
-        r.premodern = premodern.get(card.name)
         r.pauper = pauper.get(card.name)
-        r.vintage = vintage.get(card.name)
-        r.legacy = legacy.get(card.name)

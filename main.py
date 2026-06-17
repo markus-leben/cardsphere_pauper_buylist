@@ -21,6 +21,8 @@ def parse_args() -> argparse.Namespace:
                   help="Minimum price on some printing of a given card, (default $2.00)")
   p.add_argument("--min-individual-price", type=float, default=2.0,
                   help="Minimum price on the specific individual printing of a given card, (default $2.00)")
+  p.add_argument("--buylist_multiplier", type=float, default=0.5,
+                  help="Multiplier of tcg market price to decrement your offer by, (default 0.5, or 50%% of tcgplayer)")
   p.add_argument("--output", default="buylist.csv",
                   help="Output CSV file path (default: buylist.csv)")
   p.add_argument("--no-cache", action="store_true",
@@ -88,7 +90,11 @@ def main() -> None:
   cards = gather_card_data(settings)
 
 
-  entries = build_buylist(cards, minimum_price=settings['min_individual_price'], ignored_cards=settings['ignored_cards'], other_columns=settings['other_columns'])
+  entries = build_buylist(cards,
+                          minimum_price=settings['min_individual_price'],
+                          multiplier=settings['buylist_multiplier'],
+                          ignored_cards=settings['ignored_cards'],
+                          other_columns=settings['other_columns'])[:settings['max_entries']]
   to_csv(entries, settings['output'])
 
 

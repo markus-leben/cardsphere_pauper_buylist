@@ -5,10 +5,10 @@ from src.models import BuylistEntry, Card, PricePoints
 def build_buylist(
     cards: list[Card],
     minimum_price: float = 1,
+    multiplier: float = 0.5,
     ignored_cards: list = ['plains', 'island', 'swamp', 'mountain', 'forest'],
     other_columns: list = []
 ) -> list[BuylistEntry]:
-  print(other_columns)
   entries: list[BuylistEntry] = []
   ignored_cards = [ignored_card.lower() for ignored_card in ignored_cards]
   for card in cards:
@@ -21,7 +21,7 @@ def build_buylist(
       elif price < minimum_price:
         continue
       else:
-        price *= 0.5
+        price *= multiplier
       entries.append(BuylistEntry(
                     name=card.name,
                     set_code=card.set_code,
