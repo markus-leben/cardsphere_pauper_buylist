@@ -1,0 +1,5 @@
+{"description":"This is an example settings csv for making a buylist of only staples that cost more than $10, with no ignored cards",
+"staples_only":false,
+"min_printing_price":0.0,
+"min_individual_price":10.0,
+"ignored_cards":[]}

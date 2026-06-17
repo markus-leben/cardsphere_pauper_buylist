@@ -93,7 +93,7 @@ def _save_cache(data: dict[str, dict[str, int]]) -> None:
 # Public interface
 # ---------------------------------------------------------------------------
 
-def fetch_all_staples(force: bool = False, fetch_broadly: bool = False) -> dict[str, dict[str, int]]:
+def fetch_all_staples(force: bool = False, staples_only: bool = False) -> dict[str, dict[str, int]]:
     """
     Return {format: {card_name: rank}} for all formats and card types.
 
@@ -112,7 +112,7 @@ def fetch_all_staples(force: bool = False, fetch_broadly: bool = False) -> dict[
 
     for fmt in FORMATS:
         combined: dict[str, int] = {}
-        if fetch_broadly:
+        if not staples_only:
             broad_meta = _fetch_metagame(fmt, session)
             combined.update(broad_meta)
 
@@ -131,9 +131,9 @@ def fetch_all_staples(force: bool = False, fetch_broadly: bool = False) -> dict[
 
 
 
-def annotate_ratings(cards: list[Card], force: bool = False, fetch_broadly: bool = False) -> None:
+def annotate_ratings(cards: list[Card], force: bool = False, staples_only: bool = False) -> None:
     """Annotate card.mtgoldfish_ratings in-place for every card found in the staples tables."""
-    staples = fetch_all_staples(force=force, fetch_broadly=fetch_broadly)
+    staples = fetch_all_staples(force=force, staples_only=staples_only)
 
     standard = staples.get("standard", {})
     modern = staples.get("modern", {})

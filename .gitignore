@@ -1,3 +1,5 @@
 .cache
 .venv
 buylist.csv
+settings.json
+.DS_Store

@@ -152,3 +152,4 @@ class BuylistEntry:
     scryfall_id: Optional[str] = None
     cardsphere_id: Optional[str] = None
     language: str = "EN"
+    other_columns: dict[str, str] = field(default_factory=dict)
