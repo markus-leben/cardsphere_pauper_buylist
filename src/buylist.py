@@ -5,8 +5,10 @@ from src.models import BuylistEntry, Card, PricePoints
 def build_buylist(
     cards: list[Card],
     minimum_price: float = 1,
-    ignored_cards: list = ['plains', 'island', 'swamp', 'mountain', 'forest']
+    ignored_cards: list = ['plains', 'island', 'swamp', 'mountain', 'forest'],
+    other_columns: list = []
 ) -> list[BuylistEntry]:
+  print(other_columns)
   entries: list[BuylistEntry] = []
   ignored_cards = [ignored_card.lower() for ignored_card in ignored_cards]
   for card in cards:
@@ -34,7 +36,8 @@ def build_buylist(
                         else card.identifiers.cardsphere_foil_id if finish == "foil"
                         else card.identifiers.cardsphere_etched_id if finish == "etched"
                         else "",
-                    reason="pauper relevant"
+                    reason="pauper relevant",
+                    other_columns= {column:getattr(card, column) for column in other_columns}
                 ))
 
   return entries

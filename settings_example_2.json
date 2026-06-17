@@ -1,0 +1,6 @@
+{"description":"This is an example settings csv that should closely align with the buylist_example",
+"staples_only":false,
+"min_printing_price":2.0,
+"min_individual_price":2.0,
+"ignored_cards":["plains", "island", "swamp", "mountain", "forest"],
+"other_columns": []}

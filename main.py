@@ -27,8 +27,10 @@ def parse_args() -> argparse.Namespace:
                   help="Ignore cached data and re-download")
   p.add_argument("--staples-only", action="store_true",
                   help="Read only the mtggoldfish staples")
-  p.add_argument("--ignored_cards", action="append",
-                  help="Append a card name to the list if ignored cards")
+  p.add_argument("--ignored_cards", action="append", default=[],
+                  help="Append a card name to the list of ignored cards")
+  p.add_argument("--other_columns", action="append", default=[],
+                  help="Add a column with another card value")
   return p.parse_args()
 
 
@@ -86,7 +88,7 @@ def main() -> None:
   cards = gather_card_data(settings)
 
 
-  entries = build_buylist(cards, minimum_price=settings['min_individual_price'], ignored_cards=settings['ignored_cards'])
+  entries = build_buylist(cards, minimum_price=settings['min_individual_price'], ignored_cards=settings['ignored_cards'], other_columns=settings['other_columns'])
   to_csv(entries, settings['output'])
 
 
